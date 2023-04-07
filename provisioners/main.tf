@@ -32,6 +32,11 @@ resource "aws_instance" "web" {
   key_name = aws_key_pair.web_keypair.key_name
   vpc_security_group_ids = [aws_security_group.allow_ssh.id]
   user_data = data.cloudinit_config.webserver.rendered
+
+  provisioner "local-exec" {
+    command = "echo hello >> ./private_ips.txt"
+  }
+
   tags = {
     Name = "test-ec2-instance"
   }
